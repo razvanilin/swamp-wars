@@ -9,8 +9,9 @@ import java.util.ArrayList;
  */
 public interface Entity {
 	
-	public void move();
+	public void move(Point2D newPosition);
 	public ArrayList<Point2D> getPath();
 	public Point2D getCurrentPosition();
 	public boolean isAlive();
+	public void setAlive(boolean isAlive);
 }
