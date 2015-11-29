@@ -20,8 +20,8 @@ public class Parrot extends Enemy {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		System.out.println("Parrot was created.");
 	}
-	public Parrot(){};
 	
 	/* END OF CONSTRUCTORS */
 

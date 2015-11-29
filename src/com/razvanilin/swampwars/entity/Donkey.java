@@ -13,8 +13,8 @@ public class Donkey extends Enemy {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		System.out.println("Donkey was created.");
 	}
-	public Donkey() {};
 	
 	/* END OF CONSTRUCTORS */
 

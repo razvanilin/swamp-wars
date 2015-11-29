@@ -1,11 +1,7 @@
 package com.razvanilin.swampwars.ui;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +10,11 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.razvanilin.swampwars.game.Game;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+
 public class GameScreen extends JFrame {
 
 	private static final int CELL_SIZE = 50;
@@ -21,6 +22,7 @@ public class GameScreen extends JFrame {
 	private JPanel contentPane;
 	private int gridWidth;
 	private int gridHeight;
+	private Game game;
 
 	/**
 	 * Create the frame.
@@ -30,6 +32,14 @@ public class GameScreen extends JFrame {
 		this.gridWidth = gridWidth;
 		this.gridHeight = gridHeight;
 		
+		// get the instance of the game and start it
+		this.game = Game.Instace();
+		game.start();
+		
+		drawScene();
+	}
+	
+	private void drawScene() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 600);
@@ -40,30 +50,36 @@ public class GameScreen extends JFrame {
 		
 		JLabel lblTurn = new JLabel("Turn:");
 		lblTurn.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTurn.setBounds(17, 91, 58, 16);
+		lblTurn.setBounds(17, 140, 58, 16);
 		contentPane.add(lblTurn);
 		
 		JLabel label = new JLabel("5");
 		label.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		label.setBounds(77, 91, 61, 16);
+		label.setBounds(75, 140, 61, 16);
 		contentPane.add(label);
 		
 		JButton btnNewButton = new JButton("Next Turn");
-		btnNewButton.setBounds(6, 20, 96, 59);
+		// update the game when the next turn button is pressed
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.update();
+			}
+		});
+		btnNewButton.setBounds(6, 20, 130, 59);
 		contentPane.add(btnNewButton);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(17, 119, 68, 16);
+		separator.setBounds(17, 168, 119, 16);
 		contentPane.add(separator);
 		
 		JLabel lblEnemiesDefeated = new JLabel("Enemies Defeated");
 		lblEnemiesDefeated.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		lblEnemiesDefeated.setBounds(14, 147, 88, 16);
+		lblEnemiesDefeated.setBounds(27, 196, 88, 16);
 		contentPane.add(lblEnemiesDefeated);
 		
 		JLabel label_1 = new JLabel("25");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setBounds(24, 175, 61, 16);
+		label_1.setBounds(37, 224, 61, 16);
 		contentPane.add(label_1);
 		
 		JButton btnUndoMove = new JButton("Undo Move");
@@ -74,5 +90,9 @@ public class GameScreen extends JFrame {
 		panel.generate(gridWidth, gridHeight);
 		
 		contentPane.add(panel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(6, 91, 130, 27);
+		contentPane.add(comboBox);
 	}
 }

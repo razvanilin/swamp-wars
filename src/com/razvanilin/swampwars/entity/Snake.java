@@ -17,8 +17,8 @@ public class Snake extends Enemy {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		System.out.println("Snake was created.");
 	}
-	public Snake(){};
 
 	/* END OF CONSTRUCTORS */
 	
