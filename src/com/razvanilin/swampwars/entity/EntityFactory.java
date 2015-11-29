@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.razvanilin.swampwars.entity;
 
 import java.awt.geom.Point2D;
@@ -9,11 +6,11 @@ import java.awt.geom.Point2D;
  * @author Razvan Ilin
  *
  */
-public class EnemyFactory {
+public class EntityFactory {
 	
 	private Point2D initialEnemyPos;
 	
-	public EnemyFactory(Point2D initialPos) {
+	public EntityFactory(Point2D initialPos) {
 		initialEnemyPos.setLocation(initialPos.getX(), initialPos.getY());
 	}
 	
@@ -28,5 +25,9 @@ public class EnemyFactory {
 		}
 		
 		return null;
+	}
+	
+	public Entity generateMainCharacter(String name, Point2D position, Class diet, boolean isAlive) {
+		return new Ogre(name, position, diet, isAlive);
 	}
 }
