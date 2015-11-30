@@ -7,9 +7,7 @@ import java.util.ArrayList;
  * @author Razvan Ilin
  *
  */
-public interface Entity extends Action{
-	@Override
-	public void move();
+public interface Entity {
 	
 	public ArrayList<Point2D> getPath();
 	public Point2D getCurrentPosition();

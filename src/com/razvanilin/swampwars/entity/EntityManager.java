@@ -29,7 +29,9 @@ public class EntityManager {
 	public void moveEntities() {
 		for (Entity entity : entities) {
 			try {
-				entity.move();
+				//entity.move();
+				Movement movement = new Movement(entity);
+				movement.move();
 			} catch (NullPointerException e) {
 				//e.printStackTrace();
 				System.out.println("Error Size: " + entities.size());

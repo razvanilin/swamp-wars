@@ -10,7 +10,7 @@ import com.razvanilin.swampwars.ui.UIConfiguration;
  * @author Razvan Ilin
  *
  */
-public class Movement {
+public class Movement implements Action {
 	
 	private Entity entity;
 	private UIConfiguration configuration;
@@ -20,6 +20,7 @@ public class Movement {
 		this.configuration = UIConfiguration.Instace();
 	}
 	
+	@Override
 	public void move() {
 		int x = (int) entity.getCurrentPosition().getX();
 		int y = (int) entity.getCurrentPosition().getY();

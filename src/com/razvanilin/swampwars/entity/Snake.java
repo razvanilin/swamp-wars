@@ -23,11 +23,6 @@ public class Snake extends Enemy {
 	}
 
 	/* END OF CONSTRUCTORS */
-	
-	@Override
-	public void move() {
-		movement.move();
-	}
 
 	@Override
 	public ArrayList<Point2D> getPath() {

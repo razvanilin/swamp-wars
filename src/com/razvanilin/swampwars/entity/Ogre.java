@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Razvan Ilin
  *
  */
-public class Ogre implements Entity, Action {
+public class Ogre implements Entity {
 
 	private String name;
 	private ArrayList<Point2D> positions;
@@ -71,11 +71,6 @@ public class Ogre implements Entity, Action {
 	}
 
 	/* END OF CONSTRUCTORS */
-
-	@Override
-	public void move() {
-		movement.move();
-	}
 
 	@Override
 	public ArrayList<Point2D> getPath() {
