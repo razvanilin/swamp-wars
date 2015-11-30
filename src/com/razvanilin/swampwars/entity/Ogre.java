@@ -23,7 +23,7 @@ public class Ogre implements Entity, Action {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
-		this.movement = new Movement();
+		this.movement = new Movement(this);
 		System.out.println("Ogre was created.");
 	}
 
@@ -73,12 +73,8 @@ public class Ogre implements Entity, Action {
 	/* END OF CONSTRUCTORS */
 
 	@Override
-	public void move(Point2D newPosition) {
-		// make sure that the array is initialised before adding anything to it
-		if (positions == null)
-			positions = new ArrayList<Point2D>();
-		// add the new position at the beginning of the array
-		positions.add(newPosition);
+	public void move() {
+		movement.move();
 	}
 
 	@Override
@@ -88,8 +84,13 @@ public class Ogre implements Entity, Action {
 
 	@Override
 	public Point2D getCurrentPosition() {
-
-		return positions.get(0);
+		
+		return positions.get(positions.size()-1);
+	}
+	
+	@Override
+	public void setPosition(Point2D newPosition) {
+		positions.add(newPosition);
 	}
 
 	@Override
@@ -107,11 +108,6 @@ public class Ogre implements Entity, Action {
 
 	public void setDiet(String diet) {
 		this.diet = diet;
-	}
-
-	@Override
-	public void move() {
-		movement.move();
 	}
 
 }

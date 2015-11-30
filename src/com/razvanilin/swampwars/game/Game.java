@@ -13,14 +13,17 @@ import com.razvanilin.swampwars.entity.*;
  */
 public class Game {
 	private static Game instance;
+	
 	private UIConfiguration configuration;
 	private boolean isGameOver;
 	
 	private EntityFactory entityFactory;
+	private EntityManager entityManager;
 	
 	private Game() {
 		entityFactory = new EntityFactory(new Point2D.Double(0,0));
 		configuration = UIConfiguration.Instace();
+		entityManager = EntityManager.Instance();
 		isGameOver = false;
 	}
 	
@@ -31,13 +34,20 @@ public class Game {
 	}
 	
 	public void start() {
-		entityFactory.generateMainCharacter(configuration.getCharacterName(), new Point2D.Double(2, 2), "ogre enemies", true);
+		entityManager.add(entityFactory.generateMainCharacter(configuration.getCharacterName(), new Point2D.Double(2, 2), "ogre enemies", true));
 	}
 	
 	public void update() {
+		// Move existing entities
+		entityManager.moveEntities();
+		
+		
 		// when the Next Turn button is pressed, call this method
 		try {
-			entityFactory.generateEnemy();
+			Entity enemy = entityFactory.generateEnemy();
+			if (enemy != null)
+				entityManager.add(enemy);
+			
 		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();

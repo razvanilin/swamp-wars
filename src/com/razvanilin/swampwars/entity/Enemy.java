@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public abstract class Enemy implements Entity {
 
 	@Override
-	public abstract void move(Point2D newPosition);
+	public abstract void move();
 
 	@Override
 	public abstract ArrayList<Point2D> getPath();

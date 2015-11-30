@@ -11,22 +11,22 @@ public class Snake extends Enemy {
 	
 	private ArrayList<Point2D> positions;
 	private boolean isAlive;
+	private Movement movement;
 	
 	/* CONSTRUCTORS*/
 	public Snake(Point2D position, boolean isAlive) {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		this.movement = new Movement(this);
 		System.out.println("Snake was created.");
 	}
 
 	/* END OF CONSTRUCTORS */
 	
 	@Override
-	public void move(Point2D newPosition) {
-		if (this.positions == null) this.positions = new ArrayList<Point2D>();
-		
-		this.positions.add(newPosition);
+	public void move() {
+		movement.move();
 	}
 
 	@Override
@@ -36,7 +36,12 @@ public class Snake extends Enemy {
 
 	@Override
 	public Point2D getCurrentPosition() {
-		return this.positions.get(0);
+		return this.positions.get(positions.size()-1);
+	}
+	
+	@Override
+	public void setPosition(Point2D newPosition) {
+		positions.add(newPosition);
 	}
 
 	@Override

@@ -22,12 +22,18 @@ public class EntityManager {
 	}
 	
 	public void add(Entity entity) {
+		System.out.println(entity.getClass().getTypeName() + " was added to the game.");
 		entities.add(entity);
 	}
 	
 	public void moveEntities() {
 		for (Entity entity : entities) {
-			//entity.move();
+			try {
+				entity.move();
+			} catch (NullPointerException e) {
+				//e.printStackTrace();
+				System.out.println("Error Size: " + entities.size());
+			}
 		}
 	}
 }
