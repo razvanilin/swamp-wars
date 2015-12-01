@@ -25,7 +25,7 @@ public class Movement implements Action {
 		int x = (int) entity.getCurrentPosition().getX();
 		int y = (int) entity.getCurrentPosition().getY();
 		
-		System.out.print(entity.getClass().getTypeName() + " is moving from (" + x + "," + y + ") to ");
+		System.out.print(entity.getClass().getSimpleName() + " is moving from (" + x + "," + y + ") to ");
 		
 		boolean isMovable = false;
 		
@@ -103,6 +103,6 @@ public class Movement implements Action {
 		
 		entity.setPosition(new Point2D.Double(x, y));
 		
-		System.out.println("(" + entity.getCurrentPosition().getX() + "," + entity.getCurrentPosition().getY() + ")");
+		System.out.println("(" + (int)entity.getCurrentPosition().getX() + "," + (int)entity.getCurrentPosition().getY() + ")");
 	}
 }

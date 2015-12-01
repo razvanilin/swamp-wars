@@ -22,7 +22,6 @@ public class EntityManager {
 	}
 	
 	public void add(Entity entity) {
-		System.out.println(entity.getClass().getTypeName() + " was added to the game.");
 		entities.add(entity);
 	}
 	
@@ -30,7 +29,15 @@ public class EntityManager {
 		for (Entity entity : entities) {
 			Movement movement = new Movement(entity);
 			movement.move();
+			// check to see if there are any conflicts after the movement
+			if (EnemyObserver.class.isAssignableFrom(entity.getClass())) {
+				EnemyObserver observer = (EnemyObserver)entity;
+				if (observer.getState()) {
+					System.out.println(observer.getClass().getSimpleName() + " is in conflict");
+				}
+			}
 		}
+		
 	}
 	
 	public void undoEntityMovements() {

@@ -8,12 +8,16 @@ public class Donkey extends Enemy {
 	private ArrayList<Point2D> positions;
 	private boolean isAlive;
 	private Movement movement;
+	private boolean isInConflict;
 	
 	/* CONSTRUCTORS */
-	public Donkey(Point2D position, boolean isAlive) {
+	public Donkey(Point2D position, boolean isAlive, MainCharacter mainCharacter) {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		this.subject = mainCharacter;
+		
+		this.isInConflict = false;
 		this.movement = new Movement(this);
 		System.out.println("Donkey was created.");
 	}
@@ -32,6 +36,13 @@ public class Donkey extends Enemy {
 	
 	@Override
 	public void setPosition(Point2D newPosition) {
+		// check if the new position will create a conflict with the main character (subject)
+		if (newPosition.equals(subject.getCurrentPosition())) {
+			updateState();
+		} else {
+			isInConflict = false;
+		}
+		
 		positions.add(newPosition);
 	}
 
@@ -42,6 +53,16 @@ public class Donkey extends Enemy {
 	@Override
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+
+	@Override
+	public void updateState() {
+		isInConflict = !isInConflict;
+	}
+
+	@Override
+	public boolean getState() {
+		return isInConflict;
 	}
 
 }

@@ -13,14 +13,15 @@ import java.util.Random;
 public class EntityFactory {
 	
 	private Point2D initialEnemyPos;
-	private ArrayList<Class> enemies;
+	private ArrayList<Class<?>> enemies;
 	private int difficulty;
+	private MainCharacter mainCharacter;
 	
 	public EntityFactory(Point2D initialPos) {
 		initialEnemyPos = new Point2D.Double(initialPos.getX(), initialPos.getY());
 		
 		// register the enemy types
-		enemies = new ArrayList<Class>();
+		enemies = new ArrayList<Class<?>>();
 		enemies.add(Donkey.class);
 		enemies.add(Parrot.class);
 		enemies.add(Snake.class);
@@ -28,28 +29,19 @@ public class EntityFactory {
 		difficulty = 3;
 	}
 	
-	public Enemy generateEnemy(String enemyType) {
-		
-		if (enemyType.equalsIgnoreCase("DONKEY")) {
-			return new Donkey(initialEnemyPos, true);
-		} else if (enemyType.equalsIgnoreCase("SNAKE")) {
-			return new Snake(initialEnemyPos, true);
-		} else if (enemyType.equalsIgnoreCase("PARROT")) {
-			return new Parrot(initialEnemyPos, true);
-		}
-		
-		return null;
-	}
-	
 	public Enemy generateEnemy() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Random generateRand = new Random();
 		
 		// the lower the difficulty number, the higher the chances that an enemy is created
 		if ((generateRand.nextInt(difficulty)+1) == 1) {
+			// generate a random type of enemy
 			Random enemyRand = new Random();
 			Class<?> enemyClass = enemies.get(enemyRand.nextInt(enemies.size()));
 			Constructor<?> enemyConstructor = enemyClass.getConstructors()[0];
-			Object enemyObject = enemyConstructor.newInstance(new Point2D.Double(0,0), true);
+			Object enemyObject = enemyConstructor.newInstance(new Point2D.Double(0,0), true, mainCharacter);
+			
+			// register the enemy with the main character
+			mainCharacter.registerObserver((Enemy) enemyObject);
 			
 			return (Enemy)enemyObject;
 		}
@@ -57,7 +49,8 @@ public class EntityFactory {
 		return null;
 	}
 	
-	public Entity generateMainCharacter(String name, Point2D position, String diet, boolean isAlive) {
-		return new Ogre(name, position, diet, isAlive);
+	public MainCharacter generateMainCharacter(String name, Point2D position, String diet, boolean isAlive) {
+		this.mainCharacter = new Ogre(name, position, diet, isAlive);
+		return mainCharacter;
 	}
 }

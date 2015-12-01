@@ -16,14 +16,14 @@ public class UndoMovement implements Action {
 	
 	@Override
 	public void move() {
-		System.out.print(entity.getClass().getTypeName() + " is undoing from (" + entity.getCurrentPosition().getX() + "," + entity.getCurrentPosition().getY() + ") to ");
+		System.out.print(entity.getClass().getSimpleName() + " is undoing from (" + (int)entity.getCurrentPosition().getX() + "," + (int)entity.getCurrentPosition().getY() + ") to ");
 		// get the coordinates of the second last position
 		int x = (int) entity.getPath().get(entity.getPath().size()-2).getX();
 		int y = (int) entity.getPath().get(entity.getPath().size()-2).getY();
 		
 		entity.setPosition(new Point2D.Double(x, y));
 		
-		System.out.println("(" + entity.getCurrentPosition().getX() + "," + entity.getCurrentPosition().getY() + ")");
+		System.out.println("(" + (int)entity.getCurrentPosition().getX() + "," + (int)entity.getCurrentPosition().getY() + ")");
 	}
 
 }

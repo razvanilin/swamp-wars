@@ -14,13 +14,17 @@ public class Parrot extends Enemy {
 
 	private ArrayList<Point2D> positions;
 	private boolean isAlive;
+	private boolean isInConflict;
 	private Movement movement;
 	
 	/* CONSTRUCTORS */
-	public Parrot(Point2D position, boolean isAlive) {
+	public Parrot(Point2D position, boolean isAlive, MainCharacter mainCharacter) {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		this.subject = mainCharacter;
+		
+		this.isInConflict = false;
 		this.movement = new Movement(this);
 		System.out.println("Parrot was created.");
 	}
@@ -39,6 +43,13 @@ public class Parrot extends Enemy {
 	
 	@Override
 	public void setPosition(Point2D newPosition) {
+		// check if the new position will cause a conflict with the main character
+		if (newPosition.equals(subject.getCurrentPosition())) {
+			updateState();
+		} else {
+			isInConflict = false;
+		}
+		
 		positions.add(newPosition);
 	}
 
@@ -50,6 +61,16 @@ public class Parrot extends Enemy {
 	@Override
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+
+	@Override
+	public void updateState() {
+		isInConflict = !isInConflict;
+	}
+
+	@Override
+	public boolean getState() {
+		return isInConflict;
 	}
 
 }
