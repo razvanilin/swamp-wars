@@ -28,14 +28,27 @@ public class EntityManager {
 	
 	public void moveEntities() {
 		for (Entity entity : entities) {
-			try {
-				//entity.move();
-				Movement movement = new Movement(entity);
-				movement.move();
-			} catch (NullPointerException e) {
-				//e.printStackTrace();
-				System.out.println("Error Size: " + entities.size());
+			Movement movement = new Movement(entity);
+			movement.move();
+		}
+	}
+	
+	public void undoEntityMovements() {
+		ArrayList<Entity> entityRemoveList = new ArrayList<Entity>();
+		
+		for (Entity entity : entities) {
+			// if the entity didn't move (has just one position in the total path), add it to the remove list to be removed from the game
+			if (entity.getPath().size() < 2) {
+				entityRemoveList.add(entity);
+			} else {
+				UndoMovement undo = new UndoMovement(entity);
+				undo.move();
 			}
+		}
+		
+		// remove all objects from the remove list (that had just been placed on the grid)
+		for (Entity entity : entityRemoveList) {
+			entities.remove(entity);
 		}
 	}
 }

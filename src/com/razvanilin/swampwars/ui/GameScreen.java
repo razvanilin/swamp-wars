@@ -83,6 +83,11 @@ public class GameScreen extends JFrame {
 		contentPane.add(label_1);
 		
 		JButton btnUndoMove = new JButton("Undo Move");
+		btnUndoMove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.undo();
+			}
+		});
 		btnUndoMove.setBounds(6, 482, 117, 29);
 		contentPane.add(btnUndoMove);
 		

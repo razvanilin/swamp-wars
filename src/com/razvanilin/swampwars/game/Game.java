@@ -55,6 +55,10 @@ public class Game {
 		}
 	}
 	
+	public void undo() {
+		entityManager.undoEntityMovements();
+	}
+	
 	public void draw() {
 		// maybe not needed
 	}
