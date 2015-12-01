@@ -96,7 +96,7 @@ public class GameGrid extends JPanel {
 					cell.setBorder(BorderFactory.createEtchedBorder(Color.red,Color.red));
 				}
 				
-				cell.setToolTipText(String.valueOf(overlap));
+				cell.setText(String.valueOf(overlap));
 				cell.setBounds(CELL_SIZE*j, CELL_SIZE*i, CELL_SIZE, CELL_SIZE);
 				this.add(cell);
 			}
