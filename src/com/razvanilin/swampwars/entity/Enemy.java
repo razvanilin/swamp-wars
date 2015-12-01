@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Razvan Ilin
  *
  */
-public abstract class Enemy extends EnemyObserver implements Entity {
+public abstract class Enemy extends EntityObserver implements Entity {
 
 	@Override
 	public abstract ArrayList<Point2D> getPath();

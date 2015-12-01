@@ -10,9 +10,11 @@ import java.util.ArrayList;
 public class EntityManager {
 	private static EntityManager instance;
 	private ArrayList<Entity> entities;
+	private ArrayList<EntityObserver> conflictingEntities;
 
 	private EntityManager() {
 		entities = new ArrayList<Entity>();
+		conflictingEntities = new ArrayList<EntityObserver>();
 	}
 	
 	public static EntityManager Instance() {
@@ -25,15 +27,23 @@ public class EntityManager {
 		entities.add(entity);
 	}
 	
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+	
 	public void moveEntities() {
+		// clear the conflicting entities array and prepare it for the next iteration
+		conflictingEntities.clear();
+		
 		for (Entity entity : entities) {
 			Movement movement = new Movement(entity);
 			movement.move();
 			// check to see if there are any conflicts after the movement
-			if (EnemyObserver.class.isAssignableFrom(entity.getClass())) {
-				EnemyObserver observer = (EnemyObserver)entity;
+			if (EntityObserver.class.isAssignableFrom(entity.getClass())) {
+				EntityObserver observer = (EntityObserver)entity;
 				if (observer.getState()) {
 					System.out.println(observer.getClass().getSimpleName() + " is in conflict");
+					conflictingEntities.add(observer);
 				}
 			}
 		}
@@ -57,5 +67,13 @@ public class EntityManager {
 		for (Entity entity : entityRemoveList) {
 			entities.remove(entity);
 		}
+	}
+	
+	public void removeEntity(Entity entity) {
+		entities.remove(entity);
+	}
+	
+	public ArrayList<EntityObserver> getConflicts() {
+		return conflictingEntities;
 	}
 }

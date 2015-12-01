@@ -22,7 +22,7 @@ public class Ogre extends MainCharacter {
 		this.positions.add(position);
 		this.isAlive = isAlive;
 		
-		this.observersList = new ArrayList<EnemyObserver>();
+		this.observersList = new ArrayList<EntityObserver>();
 		
 		this.movement = new Movement(this);
 		System.out.println("Ogre was created.");
@@ -67,13 +67,13 @@ public class Ogre extends MainCharacter {
 	}
 	
 	@Override
-	public void registerObserver(EnemyObserver observer) {
+	public void registerObserver(EntityObserver observer) {
 		observersList.add(observer);
 	}
 	
 	@Override
 	public void notifyAllObservers() {
-		for (EnemyObserver enemy : observersList) {
+		for (EntityObserver enemy : observersList) {
 			enemy.updateState();
 		}
 	}

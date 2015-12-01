@@ -2,11 +2,14 @@ package com.razvanilin.swampwars.ui;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.razvanilin.swampwars.entity.Entity;
 
 public class GameGrid extends JPanel {
 
@@ -33,16 +36,69 @@ public class GameGrid extends JPanel {
 		
 		// create the panel that contains the grid
 		//JPanel panel = new JPanel();
-		this.setBounds(154, 20, CELL_SIZE*(gridWidth+1), CELL_SIZE*(gridHeight+1));
+		this.setBounds(154, 20, CELL_SIZE*(gridWidth), CELL_SIZE*(gridHeight));
 		this.setBorder(BorderFactory.createEtchedBorder(Color.black,Color.black));
 		
-		for (int i=0; i<this.gridWidth; i++) {
+		/*for (int i=0; i<this.gridWidth; i++) {
 			for (int j=0; j<this.gridHeight; j++) {
 				JLabel cell = new JLabel();
 				cell.setIcon(new ImageIcon(new ImageIcon("assets/grass.png").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
 				cell.setBounds(CELL_SIZE*j, CELL_SIZE*i, CELL_SIZE, CELL_SIZE);
 				this.add(cell);
 			}
+		}*/
+	}
+	
+	public void draw(ArrayList<Entity> entities) {
+		// clear the labels
+		this.removeAll();
+		
+		for (int i=0; i<this.gridWidth; i++) {
+			for(int j=0; j<this.gridHeight; j++) {
+				JLabel cell = new JLabel();
+				boolean isEntityPlaced = false;
+				
+				for (Entity entity : entities) {
+					int x = (int) entity.getCurrentPosition().getX();
+					int y = (int) entity.getCurrentPosition().getY();
+					// check to see if the entity is located in the present location
+					if (x == i && y == j) {
+						switch(entity.getClass().getSimpleName()) {
+						case "Ogre":
+							cell.setIcon(new ImageIcon(new ImageIcon("assets/ogre.gif").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
+							isEntityPlaced = true;
+							System.out.println("ogre smash!");
+							break;
+						case "Donkey":
+							cell.setIcon(new ImageIcon(new ImageIcon("assets/donkey.jpg").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
+							isEntityPlaced = true;
+							System.out.println("Donkey smash!");
+							break;
+						case "Snake":
+							cell.setIcon(new ImageIcon(new ImageIcon("assets/snake.png").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
+							isEntityPlaced = true;
+							System.out.println("Snake smash!");
+							break;
+						case "Parrot":
+							cell.setIcon(new ImageIcon(new ImageIcon("assets/parrot.png").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
+							isEntityPlaced = true;
+							System.out.println("Parrot smash!");
+							break;
+						}
+						
+						if (isEntityPlaced) break;
+					}
+				}
+				
+				if (!isEntityPlaced) {
+					cell.setIcon(new ImageIcon(new ImageIcon("assets/grass.png").getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT)));
+				}
+				
+				cell.setBounds(CELL_SIZE*j, CELL_SIZE*i, CELL_SIZE, CELL_SIZE);
+				this.add(cell);
+			}
 		}
+		
+		this.repaint();
 	}
 }

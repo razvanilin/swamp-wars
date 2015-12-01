@@ -50,42 +50,33 @@ public class GameScreen extends JFrame {
 		
 		JLabel lblTurn = new JLabel("Turn:");
 		lblTurn.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTurn.setBounds(17, 140, 58, 16);
+		lblTurn.setBounds(17, 213, 58, 16);
 		contentPane.add(lblTurn);
 		
-		JLabel label = new JLabel("5");
-		label.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		label.setBounds(75, 140, 61, 16);
-		contentPane.add(label);
-		
-		JButton btnNewButton = new JButton("Next Turn");
-		// update the game when the next turn button is pressed
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.update();
-			}
-		});
-		btnNewButton.setBounds(6, 20, 130, 59);
-		contentPane.add(btnNewButton);
+		JLabel labelTurnNumber = new JLabel("5");
+		labelTurnNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		labelTurnNumber.setBounds(73, 213, 61, 16);
+		contentPane.add(labelTurnNumber);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(17, 168, 119, 16);
+		separator.setBounds(17, 241, 119, 16);
 		contentPane.add(separator);
 		
 		JLabel lblEnemiesDefeated = new JLabel("Enemies Defeated");
 		lblEnemiesDefeated.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		lblEnemiesDefeated.setBounds(27, 196, 88, 16);
+		lblEnemiesDefeated.setBounds(17, 280, 88, 16);
 		contentPane.add(lblEnemiesDefeated);
 		
 		JLabel label_1 = new JLabel("25");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setBounds(37, 224, 61, 16);
+		label_1.setBounds(27, 308, 61, 16);
 		contentPane.add(label_1);
 		
 		JButton btnUndoMove = new JButton("Undo Move");
 		btnUndoMove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				game.undo();
+				labelTurnNumber.setText(String.valueOf(game.getTurnNumber()));
 			}
 		});
 		btnUndoMove.setBounds(6, 482, 117, 29);
@@ -96,8 +87,24 @@ public class GameScreen extends JFrame {
 		
 		contentPane.add(panel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(6, 91, 130, 27);
-		contentPane.add(comboBox);
+		JComboBox dietBox = new JComboBox(game.getDiets());
+		dietBox.setBounds(6, 130, 130, 27);
+		contentPane.add(dietBox);
+		
+		JLabel lblChangeDiet = new JLabel("Change Diet");
+		lblChangeDiet.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		lblChangeDiet.setBounds(17, 113, 109, 16);
+		contentPane.add(lblChangeDiet);
+		
+		JButton nextTurnButton = new JButton("Next Turn");
+		// update the game when the next turn button is pressed
+		nextTurnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.update((String)dietBox.getSelectedItem());
+				labelTurnNumber.setText(String.valueOf(game.getTurnNumber()));
+			}
+		});
+		nextTurnButton.setBounds(6, 20, 130, 59);
+		contentPane.add(nextTurnButton);
 	}
 }

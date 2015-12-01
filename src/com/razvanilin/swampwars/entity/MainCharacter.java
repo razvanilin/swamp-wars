@@ -8,12 +8,12 @@ import java.util.ArrayList;
  *
  */
 public abstract class MainCharacter implements Entity{
-	protected ArrayList<EnemyObserver> observersList;
+	protected ArrayList<EntityObserver> observersList;
 	protected String name;
 	protected String diet;
 	
 	public abstract String getDiet();
 	public abstract void setDiet(String diet);
 	public abstract void notifyAllObservers();
-	public abstract void registerObserver(EnemyObserver observer);
+	public abstract void registerObserver(EntityObserver observer);
 }
