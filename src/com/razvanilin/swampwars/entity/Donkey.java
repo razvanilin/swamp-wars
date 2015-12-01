@@ -65,4 +65,9 @@ public class Donkey extends Enemy {
 		return isInConflict;
 	}
 
+	@Override
+	public void removeLastPosition() {
+		positions.remove(positions.size()-1);
+	}
+
 }

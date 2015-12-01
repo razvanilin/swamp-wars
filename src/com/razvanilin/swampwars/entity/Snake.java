@@ -70,5 +70,10 @@ public class Snake extends Enemy {
 	public boolean getState() {
 		return isInConflict;
 	}
+	
+	@Override
+	public void removeLastPosition() {
+		positions.remove(positions.size()-1);
+	}
 
 }

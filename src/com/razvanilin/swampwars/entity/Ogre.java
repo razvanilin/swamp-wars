@@ -77,5 +77,10 @@ public class Ogre extends MainCharacter {
 			enemy.updateState();
 		}
 	}
+	
+	@Override
+	public void removeLastPosition() {
+		positions.remove(positions.size()-1);
+	}
 
 }

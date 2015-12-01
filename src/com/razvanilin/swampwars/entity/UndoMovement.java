@@ -21,7 +21,8 @@ public class UndoMovement implements Action {
 		int x = (int) entity.getPath().get(entity.getPath().size()-2).getX();
 		int y = (int) entity.getPath().get(entity.getPath().size()-2).getY();
 		
-		entity.setPosition(new Point2D.Double(x, y));
+		//entity.setPosition(new Point2D.Double(x, y));
+		entity.removeLastPosition();
 		
 		System.out.println("(" + (int)entity.getCurrentPosition().getX() + "," + (int)entity.getCurrentPosition().getY() + ")");
 	}
