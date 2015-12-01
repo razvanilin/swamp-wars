@@ -17,14 +17,14 @@ public class StrategyKnight implements DietStrategy {
 	}
 	
 	@Override
-	public void execute() {
+	public void execute(int turn) {
 		int enemies = 0;
 		
 		// if there is just one enemy in the conflicts array, then remove that from the game
 		if (entityManager.getConflicts().size() == 1) {
 			// make sure the entity in the array is an enemy
 			if (Enemy.class.isAssignableFrom(entityManager.getConflicts().get(0).getClass())) {
-				entityManager.removeEntity((Entity)entityManager.getConflicts().get(0));
+				entityManager.removeEntity((Entity)entityManager.getConflicts().get(0), turn);
 			}
 		} else if (entityManager.getConflicts().size() > 1) {
 			// go through the conflicts and make sure that in the array there are 2 or more enemies

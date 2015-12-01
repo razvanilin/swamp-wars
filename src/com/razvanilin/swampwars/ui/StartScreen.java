@@ -1,24 +1,30 @@
 package com.razvanilin.swampwars.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.UIManager;
 import java.awt.Color;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.razvanilin.swampwars.game.Game;
 
 public class StartScreen extends JFrame {
+	
+	private static final int MAX_WIDTH = 10;
+	private static final int MAX_HEIGHT = 10;
 
 	private JPanel contentPane;
 	private JTextField textName;
@@ -26,6 +32,7 @@ public class StartScreen extends JFrame {
 	private JTextField txtGridHeight;
 	
 	private UIConfiguration configuration;
+	private Game game;
 
 	/**
 	 * Create the frame.
@@ -33,6 +40,7 @@ public class StartScreen extends JFrame {
 	public StartScreen() {
 		
 		configuration = UIConfiguration.Instace();
+		game = Game.Instace();
 		
 		drawScreen();
 	}
@@ -84,12 +92,29 @@ public class StartScreen extends JFrame {
 			
 			private int gridWidth = 0;
 			private int gridHeight = 0;
+			private StartScreen startScreen;
 			
-			public void actionPerformed(ActionEvent e) {	
+			public <T extends Container> T findParent(Component comp, Class<T> clazz)  {
+		      if (comp == null)
+		         return null;
+		      if (clazz.isInstance(comp))
+		         return (clazz.cast(comp));
+		      else
+		         return findParent(comp.getParent(), clazz);     
+			}
+			
+			public void actionPerformed(ActionEvent e) {
+				startScreen = findParent((Component)e.getSource(), StartScreen.class);
 				
 				if (txtGridHeight.getText().matches("^-?\\d+$") && txtGridWidth.getText().matches("^-?\\d+$")) {
 					gridWidth = Integer.parseInt(txtGridWidth.getText());
 					gridHeight = Integer.parseInt(txtGridHeight.getText());
+					if (gridWidth > MAX_WIDTH || gridHeight > MAX_HEIGHT) {
+						JOptionPane.showMessageDialog(startScreen, "The grid dimensions should not be more than: " + MAX_WIDTH + "x" + MAX_HEIGHT);
+						gridWidth = 0;
+						gridHeight = 0;
+						return;
+					}
 				} else {
 					return;
 				}
@@ -109,9 +134,18 @@ public class StartScreen extends JFrame {
 				
 				// start a new thread with the game screen
 				EventQueue.invokeLater(new Runnable() {
+					
 					public void run() {
 						try {
 							GameScreen frame = new GameScreen(gridWidth, gridHeight);
+							frame.addWindowListener(new WindowAdapter() {
+								
+								@Override
+								public void windowClosing(WindowEvent e) {
+									startScreen.setVisible(true);
+									game.end();
+								}
+							});
 							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();

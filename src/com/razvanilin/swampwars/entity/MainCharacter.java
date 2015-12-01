@@ -16,4 +16,7 @@ public abstract class MainCharacter implements Entity{
 	public abstract void setDiet(String diet);
 	public abstract void notifyAllObservers();
 	public abstract void registerObserver(EntityObserver observer);
+	public abstract int getScore();
+	public abstract void addScore();
+	public abstract void removeScore();
 }

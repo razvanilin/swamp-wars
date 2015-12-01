@@ -1,6 +1,7 @@
 package com.razvanilin.swampwars.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 
@@ -10,11 +11,15 @@ import java.util.ArrayList;
 public class EntityManager {
 	private static EntityManager instance;
 	private ArrayList<Entity> entities;
+	private HashMap<Integer, Entity> removedEntities;
 	private ArrayList<EntityObserver> conflictingEntities;
+	private int turnNumber;
 
 	private EntityManager() {
 		entities = new ArrayList<Entity>();
 		conflictingEntities = new ArrayList<EntityObserver>();
+		removedEntities = new HashMap<Integer, Entity>();
+		
 	}
 	
 	public static EntityManager Instance() {
@@ -50,7 +55,8 @@ public class EntityManager {
 		
 	}
 	
-	public void undoEntityMovements() {
+	public void undoEntityMovements(int turn) {
+		turnNumber = turn;
 		ArrayList<Entity> entityRemoveList = new ArrayList<Entity>();
 		
 		for (Entity entity : entities) {
@@ -67,13 +73,36 @@ public class EntityManager {
 		for (Entity entity : entityRemoveList) {
 			entities.remove(entity);
 		}
+		
+		// add entities that were removed back to the game
+		if (removedEntities.get(turnNumber) != null) {
+			MainCharacter mainCharacter = (MainCharacter)entities.get(0);
+			mainCharacter.removeScore();
+			entities.add(removedEntities.get(turnNumber));
+		}
 	}
 	
-	public void removeEntity(Entity entity) {
+	public void removeEntity(Entity entity, int turn) {
+		MainCharacter mainCharacter = (MainCharacter)entities.get(0);
+		mainCharacter.addScore();
+		
 		entities.remove(entity);
+		turnNumber = turn+1;
+		removedEntities.put(turnNumber, entity);
 	}
 	
 	public ArrayList<EntityObserver> getConflicts() {
 		return conflictingEntities;
+	}
+	
+	public void clean() {
+		entities.clear();
+		removedEntities.clear();
+		conflictingEntities.clear();
+	}
+	
+	public int getScore() {
+		MainCharacter mainCharacter = (MainCharacter)entities.get(0);
+		return mainCharacter.getScore();
 	}
 }

@@ -16,12 +16,12 @@ public class StrategyEnemy implements DietStrategy {
 	}
 
 	@Override
-	public void execute() {
+	public void execute(int turn) {
 		// remove the enemies from the game
 		for (EntityObserver entity : entityManager.getConflicts()) {
 			// do a check to make sure that we have the right entity in the conflicts array
 			if (Enemy.class.isAssignableFrom(entity.getClass()))
-				entityManager.removeEntity((Entity)entity);
+				entityManager.removeEntity((Entity)entity, turn);
 		}
 	}
 

@@ -7,5 +7,5 @@ import com.razvanilin.swampwars.game.Game;
  *
  */
 public interface DietStrategy {
-	public void execute();
+	public void execute(int turn);
 }

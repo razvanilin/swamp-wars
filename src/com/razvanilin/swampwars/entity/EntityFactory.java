@@ -12,13 +12,13 @@ import java.util.Random;
  */
 public class EntityFactory {
 	
-	private Point2D initialEnemyPos;
+	//private Point2D initialEnemyPos;
 	private ArrayList<Class<?>> enemies;
 	private int difficulty;
 	private MainCharacter mainCharacter;
 	
 	public EntityFactory(Point2D initialPos) {
-		initialEnemyPos = new Point2D.Double(initialPos.getX(), initialPos.getY());
+		//initialEnemyPos = new Point2D.Double(initialPos.getX(), initialPos.getY());
 		
 		// register the enemy types
 		enemies = new ArrayList<Class<?>>();

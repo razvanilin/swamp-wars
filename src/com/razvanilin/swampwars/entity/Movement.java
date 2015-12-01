@@ -55,7 +55,7 @@ public class Movement implements Action {
 				break;
 			// upper right corner
 			case 2:
-				if(x < configuration.getGridWidth() && y > 0) {
+				if(x < configuration.getGridWidth() - 1 && y > 0) {
 					x += 1;
 					y -= 1;
 					isMovable = true;
@@ -63,14 +63,14 @@ public class Movement implements Action {
 				break;
 			// right
 			case 3:
-				if (x < configuration.getGridWidth()) {
+				if (x < configuration.getGridWidth() - 1) {
 					x += 1;
 					isMovable = true;
 				}
 				break;
 			// bottom right corner
 			case 4:
-				if (x < configuration.getGridWidth() && y < configuration.getGridHeight()) {
+				if (x < configuration.getGridWidth() - 1 && y < configuration.getGridHeight() - 1) {
 					x += 1;
 					y += 1;
 					isMovable = true;
@@ -78,14 +78,14 @@ public class Movement implements Action {
 				break;
 			// bottom
 			case 5:
-				if (y < configuration.getGridHeight()) {
+				if (y < configuration.getGridHeight() - 1) {
 					y += 1;
 					isMovable = true;
 				}
 				break;
 			// bottom left corner
 			case 6:
-				if (x>0 && y<configuration.getGridHeight()) {
+				if (x>0 && y<configuration.getGridHeight() - 1) {
 					x -= 1;
 					y += 1;
 					isMovable = true;

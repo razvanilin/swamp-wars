@@ -11,6 +11,7 @@ public class Ogre extends MainCharacter {
 
 	private ArrayList<Point2D> positions;
 	private boolean isAlive;
+	private int score;
 		
 	private Movement movement;
 
@@ -21,6 +22,7 @@ public class Ogre extends MainCharacter {
 		this.positions = new ArrayList<Point2D>();
 		this.positions.add(position);
 		this.isAlive = isAlive;
+		this.score = 0;
 		
 		this.observersList = new ArrayList<EntityObserver>();
 		
@@ -81,6 +83,21 @@ public class Ogre extends MainCharacter {
 	@Override
 	public void removeLastPosition() {
 		positions.remove(positions.size()-1);
+	}
+	
+	@Override
+	public int getScore() {
+		return score;
+	}
+	
+	@Override
+	public void addScore() {
+		score++;
+	}
+	
+	@Override
+	public void removeScore() {
+		score--;
 	}
 
 }
